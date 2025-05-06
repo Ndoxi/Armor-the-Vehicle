@@ -15,13 +15,21 @@ namespace Codebase.Core.LevelBuilders
 
         public Bounds GetBounds()
         {
-            if (_bounds.HasValue)
-                return _bounds.Value;
+            if (!_bounds.HasValue)
+                CalculateBounds();
+            return _bounds.Value;
+        }
 
+        public void RecalculateBounds()
+        {
+            CalculateBounds();
+        }
+
+        private void CalculateBounds()
+        {
             Vector3 min = Vector3.Min(StartPoint, EndPoint);
             Vector3 max = Vector3.Max(StartPoint, EndPoint);
             _bounds = new Bounds((min + max) / 2f, max - min);
-            return _bounds.Value;
         }
     }
 }

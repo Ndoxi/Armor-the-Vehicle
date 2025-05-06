@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Cinemachine;
 using Zenject;
+using Codebase.Core.Actors;
 
 namespace Codebase.Core
 {
@@ -9,11 +10,19 @@ namespace Codebase.Core
         [SerializeField] private CinemachineVirtualCamera _preparationCamera;
         [SerializeField] private CinemachineVirtualCamera _gameplayCamera;
         private CinematicCameraTransitionsManager _cameraTransitionsManager;
+        private ActorsSystem _actorsSystem;
 
         [Inject]
-        private void Construct(CinematicCameraTransitionsManager cameraTransitionsManager)
+        private void Construct(CinematicCameraTransitionsManager cameraTransitionsManager,
+                               ActorsSystem actorsSystem)
         {
             _cameraTransitionsManager = cameraTransitionsManager;
+            _actorsSystem = actorsSystem;
+        }
+
+        private void Awake()
+        {
+            SetActorToFollow(_gameplayCamera, _actorsSystem.PlayerActor);
         }
 
         public void SetCameraActive(CinematicCameraType cameraType)
@@ -29,6 +38,11 @@ namespace Codebase.Core
                 CinematicCameraType.GameplayStage => _gameplayCamera,
                 _ => throw new System.ArgumentException($"Camera of type {cameraType} not found"),
             };
+        }
+
+        private void SetActorToFollow(CinemachineVirtualCamera virtualCamera, Actor actor)
+        {
+            virtualCamera.Follow = actor.transform;
         }
     }
 }

@@ -6,46 +6,20 @@ using UnityEngine;
 
 namespace Codebase.Core
 {
-    public class GameStateMachine
+    public class GameStateMachine : StateMachine<IState>
     {
-        private const string LogTag = "StateMachine";
+        protected override string LogTag => "GameStateMachine";
+        protected override Dictionary<Type, IState> States => _states;
         private readonly Dictionary<Type, IState> _states;
-        private readonly ILogger _logger;
-        private IState _currentState;
         
-        public GameStateMachine(GameStateMachineFactory gameStateMachineFactory, ILogger logger)
+        public GameStateMachine(GameStateMachineFactory gameStateMachineFactory, ILogger logger) : base(logger)
         {
             _states = new Dictionary<Type, IState>()
             {
+                { typeof(InitializationState), gameStateMachineFactory.Create<InitializationState>() },
                 { typeof(PreparationState), gameStateMachineFactory.Create<PreparationState>() },
                 { typeof(GameplayLoopState), gameStateMachineFactory.Create<GameplayLoopState>() }
             };
-
-            _logger = logger;
-        }
-
-        public void EnterState<T>() where T : class, IState
-        {
-            var newState = GetState<T>();
-            if (_currentState != null && newState.GetType() == _currentState.GetType())
-            {
-                _logger.LogWarning(LogTag, $"State machine already in {typeof(T)} state!");
-                return;
-            }
-
-            ExitCurrentState();
-            _currentState = newState;
-            newState.Enter();
-        }
-
-        private void ExitCurrentState()
-        {
-            _currentState?.Exit();
-        }
-
-        private IState GetState<T>() where  T : class, IState 
-        {
-            return _states[typeof(T)];
         }
     }
 }

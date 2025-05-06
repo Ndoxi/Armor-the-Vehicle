@@ -14,5 +14,5 @@ namespace Codebase.Installers
         {
             Container.Bind<ILogger>().FromInstance(Debug.unityLogger);
         }
-    }    
+    }
 }

@@ -1,28 +1,70 @@
-﻿using Codebase.Core.LevelBuilders;
+﻿using Codebase.Core.Actors;
+using Codebase.Core.LevelBuilders;
+using Cysharp.Threading.Tasks;
 using System;
+using System.Threading;
+using UnityEngine;
 
 namespace Codebase.Core
 {
     public class GameplayLoopState : IState
     {
-        private readonly CinematicCameraService _cameraService;
-        private readonly LevelBuilder _levelBuilder;
+        private const string LogTag = "GameplayLoopState";
+        private const int PlayerDollyActivationDelayMs = 2000;
 
-        public GameplayLoopState(LevelBuilder levelBuilder, CinematicCameraService cameraService)
+        private readonly LevelBuilder _levelBuilder;
+        private readonly ActorsSystem _actorsSystem;
+        private readonly CinematicCameraService _cameraService;
+        private readonly ILogger _logger;
+        private CancellationTokenSource _stateExitCancellationTokenSource;
+
+        public GameplayLoopState(LevelBuilder levelBuilder,
+                                 ActorsSystem actorsSystem,
+                                 CinematicCameraService cameraService, 
+                                 ILogger logger)
         {
-            _cameraService = cameraService;
             _levelBuilder = levelBuilder;
+            _actorsSystem = actorsSystem;
+            _cameraService = cameraService;
+            _logger = logger;
         }
 
         public void Enter()
         {
+            _stateExitCancellationTokenSource = new CancellationTokenSource();
+
+            _levelBuilder.ActivateChunksLoading(_actorsSystem.PlayerActor);
             _cameraService.SetCameraActive(CinematicCameraService.CinematicCameraType.GameplayStage);
-            _levelBuilder.Initialize();
+            AllowPlayerMovementWithDelay();
         }
 
         public void Exit()
         {
-            throw new NotImplementedException();
+            _levelBuilder.DeactivateChunksLoading();
+            _levelBuilder.ClearActiveChunks();
+
+            _stateExitCancellationTokenSource?.Cancel();
+            _stateExitCancellationTokenSource?.Dispose();
+
+            _actorsSystem.PlayerActor.StateMachine.EnterState<IdleState>();
+        }
+
+        private void AllowPlayerMovementWithDelay()
+        {
+            AllowPlayerMovementAsync(PlayerDollyActivationDelayMs, _stateExitCancellationTokenSource.Token).Forget();
+        }
+
+        private async UniTaskVoid AllowPlayerMovementAsync(int delayMs, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await UniTask.Delay(delayMs, cancellationToken: cancellationToken);
+                _actorsSystem.PlayerActor.StateMachine.EnterState<DollyState>();
+            }
+            catch (OperationCanceledException)
+            {
+                _logger.Log(LogTag, "Countdown cancelled");
+            }
         }
     }
 }

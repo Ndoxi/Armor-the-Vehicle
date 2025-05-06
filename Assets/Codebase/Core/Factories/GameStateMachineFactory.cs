@@ -18,7 +18,7 @@ namespace Codebase.Core.Factories
 
             _buiders = new Dictionary<Type, Func<IState>>()
             {
-                { typeof(PreparationState), PreparationStateBuilder}
+                { typeof(PreparationState), PreparationStateBuilder }
             };
         }
 
@@ -31,7 +31,8 @@ namespace Codebase.Core.Factories
 
         private IState PreparationStateBuilder()
         {
-            var additionalArgs = new object[] { _viewFactory.Create<PreparationView>() };
+            var stateView = _viewFactory.Create<PreparationView>();
+            var additionalArgs = new object[] { stateView };
             return _instantiator.Instantiate<PreparationState>(additionalArgs);
         }
 

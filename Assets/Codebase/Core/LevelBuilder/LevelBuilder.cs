@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Codebase.Core.Actors;
+using Cysharp.Threading.Tasks;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 using Zenject;
 
@@ -8,41 +12,102 @@ namespace Codebase.Core.LevelBuilders
     public class LevelBuilder
     {
         private const int InitialChunksCount = 6;
+        private const int MinActiveLoopChunksCount = 4;
+        private const int LoopUpdateIntervalMs = 250;
+        private const string LogTag = "LevelBuilder";
 
         private readonly LevelBuilderFactory _factory;
         private readonly List<Chunk> _activeChunks;
         private readonly Transform _levelStartConnection;
+        private readonly ILogger _logger;
         private readonly GameObject _root;
         private readonly Pool<Chunk> _pool;
+        private CancellationTokenSource _loopCancellationTokenSource;
 
-        public LevelBuilder(LevelBuilderFactory factory, IInstantiator instantiator, Transform levelStartConnection)
+        public LevelBuilder(LevelBuilderFactory factory,
+                            IInstantiator instantiator,
+                            Transform levelStartConnection,
+                            ILogger logger)
         {
             _factory = factory;
             _activeChunks = new List<Chunk>(6);
             _levelStartConnection = levelStartConnection;
+            _logger = logger;
             _root = CreateRoot(instantiator);
             _pool = new Pool<Chunk>(instantiator);
         }
 
         public void Initialize()
         {
-            AddInitialLoad();
+            InitializePool();
         }
 
-        public void SpawnChunk()
+        public void ActivateChunksLoading(Actor actor)
+        {
+            _loopCancellationTokenSource?.Cancel();
+            _loopCancellationTokenSource?.Dispose();
+            _loopCancellationTokenSource = new CancellationTokenSource();
+
+            RunChunksManagmentLoop(actor.transform, _loopCancellationTokenSource.Token).Forget();
+        }
+
+        public void DeactivateChunksLoading()
+        {
+            _loopCancellationTokenSource?.Cancel();
+            _loopCancellationTokenSource?.Dispose();
+        }
+
+        public void ClearActiveChunks()
+        {
+            foreach (var actuveChunk in _activeChunks)
+                _pool.StoreItem(actuveChunk);
+
+            _activeChunks.Clear();
+        }
+
+        private async UniTaskVoid RunChunksManagmentLoop(Transform target, CancellationToken cancellationToken)
+        {
+            if (_activeChunks.Count < MinActiveLoopChunksCount)
+            {
+                int toSpawn = MinActiveLoopChunksCount - _activeChunks.Count;
+                for (int i = 0; i < toSpawn; i++)
+                    SpawnChunk();
+            }
+
+            try
+            {
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    await UniTask.Delay(LoopUpdateIntervalMs, cancellationToken: cancellationToken);
+
+                    var targetChunk = _activeChunks[_activeChunks.Count / 2 - 1];
+                    if (targetChunk.GetBounds().Contains(target.position))
+                    {
+                        DestroyChunk();
+                        SpawnChunk();
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                _logger.Log(LogTag, "Chunks managment loop cancelled");
+            }
+        }
+
+        private void SpawnChunk()
         {
             var newChunk = GetFromPoolOrSpawn();
             newChunk.transform.SetParent(_root.transform);
 
             if (_activeChunks.Count > 0)
-                ConnectChunks(newChunk, _activeChunks.Last());
+                ConnectChunk(newChunk, _activeChunks.Last());
             else
-                ConnectChunks(newChunk, _levelStartConnection.position);
+                ConnectChunk(newChunk, _levelStartConnection.position);
 
             _activeChunks.Add(newChunk);
         }
 
-        public void DestroyChunk()
+        private void DestroyChunk()
         {
             if (_activeChunks.Count == 0)
                 return;
@@ -52,7 +117,7 @@ namespace Codebase.Core.LevelBuilders
             _pool.StoreItem(chunk);
         }
 
-        private void AddInitialLoad()
+        private void InitializePool()
         {
             var initialChunks = new List<Chunk>(InitialChunksCount);
             for (int i = 0; i < InitialChunksCount; i++)
@@ -61,15 +126,17 @@ namespace Codebase.Core.LevelBuilders
             _pool.Initialize(initialChunks);
         }
 
-        private void ConnectChunks(Chunk chunk, Vector3 target)
+        private void ConnectChunk(Chunk chunk, Vector3 target)
         {
             Vector3 offset = chunk.StartPoint - chunk.transform.position;
             chunk.transform.position = target - offset;
+
+            chunk.RecalculateBounds();
         }        
         
-        private void ConnectChunks(Chunk chunk, Chunk target)
+        private void ConnectChunk(Chunk chunk, Chunk target)
         {
-            ConnectChunks(chunk, target.EndPoint);
+            ConnectChunk(chunk, target.EndPoint);
         }
 
         private Chunk GetFromPoolOrSpawn()

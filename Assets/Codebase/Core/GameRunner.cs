@@ -17,7 +17,7 @@ namespace Codebase.Core
 
         private void Awake()
         {
-            _gameStateMachine.EnterState<PreparationState>();
+            _gameStateMachine.EnterState<InitializationState>();
         }
     }
 }
