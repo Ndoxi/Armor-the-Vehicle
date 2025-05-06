@@ -304,6 +304,7 @@ GameObject:
   - component: {fileID: 111207266}
   - component: {fileID: 111207264}
   - component: {fileID: 111207268}
+  - component: {fileID: 111207269}
   m_Layer: 0
   m_Name: GameSceneContext
   m_TagString: Untagged
@@ -330,6 +331,7 @@ MonoBehaviour:
   - {fileID: 111207266}
   - {fileID: 111207264}
   - {fileID: 111207268}
+  - {fileID: 111207269}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -423,6 +425,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df905d512b80127488ec4c69d48bdad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &111207269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111207261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd471b3f78def5b4bba6743b5e9efe43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelStartConnection: {fileID: 551346002}
 --- !u!1 &323681332
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,6 +548,37 @@ Transform:
   - {fileID: 1036380022}
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &551346001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 551346002}
+  m_Layer: 0
+  m_Name: '[LevelBuilderStartPoint]'
+  m_TagString: Untagged
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &551346002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551346001}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &624929220
 PrefabInstance:
@@ -1307,7 +1353,7 @@ Transform:
   - {fileID: 923169796}
   - {fileID: 1431813194}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1431813193
 GameObject:
@@ -1509,7 +1555,7 @@ Transform:
   m_Children:
   - {fileID: 323681333}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1738080263
 PrefabInstance:
