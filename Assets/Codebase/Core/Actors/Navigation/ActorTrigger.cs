@@ -10,20 +10,14 @@ namespace Codebase.Core.Actors
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out TActor otherActor) 
-                || other.attachedRigidbody.TryGetComponent(out otherActor))
-            {
-                OnEnter?.Invoke(otherActor);
-            }
+            if (other.TryGetComponent(out ActorHitBox<TActor> hitbox))
+                OnEnter?.Invoke(hitbox.Owner);
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.TryGetComponent(out TActor otherActor)
-                || other.attachedRigidbody.TryGetComponent(out otherActor))
-            {
-                OnExit?.Invoke(otherActor);
-            }
+            if (other.TryGetComponent(out ActorHitBox<TActor> hitbox))
+                OnExit?.Invoke(hitbox.Owner);
         }
     }
 }

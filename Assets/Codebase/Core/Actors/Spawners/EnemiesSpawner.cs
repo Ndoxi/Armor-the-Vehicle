@@ -6,30 +6,21 @@ using Zenject;
 
 namespace Codebase.Core.Actors
 {
-    public class EnemiesSpawner
+    public class EnemiesSpawner : Spawner<StickmanActor>
     {
-        private const int InitialPoolSize = 33;
+        protected override int InitialPoolSize => 33;
         private const int MinEnemiesPerChunk = 7;
         private const int MaxEnemiesPerChunk = 13;
 
-        private readonly ActorsFactory _factory;
         private readonly IRandom _random;
-        private readonly Pool<StickmanActor> _pool;
         private readonly Dictionary<Chunk, List<StickmanActor>> _managedEnemiesMap;
 
         public EnemiesSpawner(ActorsFactory factory,
-                              IRandom random, 
-                              IInstantiator instantiator)
+                              IInstantiator instantiator,
+                              IRandom random) : base(factory, instantiator)
         {
-            _factory = factory;
             _random = random;
-            _pool = new Pool<StickmanActor>(instantiator);
             _managedEnemiesMap = new Dictionary<Chunk, List<StickmanActor>>();
-        }
-
-        public void Initialize()
-        {
-            InitializePool();
         }
 
         public void PopulateChunk(Chunk chunk)
@@ -77,27 +68,6 @@ namespace Codebase.Core.Actors
             }
 
             _managedEnemiesMap.Remove(chunk);
-        }
-
-        private void InitializePool()
-        {
-            var initialEnemies = new List<StickmanActor>(InitialPoolSize);
-            for (int i = 0; i < InitialPoolSize; i++)
-                initialEnemies.Add(SpawnEnemy());
-
-            _pool.Initialize(initialEnemies);
-        }
-
-        private StickmanActor GetFromPoolOrSpawn()
-        {
-            if (!_pool.Empty())
-                return _pool.GetItem();
-            return SpawnEnemy();
-        }
-
-        private StickmanActor SpawnEnemy()
-        {
-            return _factory.Create<StickmanActor>();
         }
     }
 }

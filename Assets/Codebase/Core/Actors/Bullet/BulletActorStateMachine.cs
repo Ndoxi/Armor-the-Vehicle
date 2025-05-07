@@ -4,14 +4,13 @@ using UnityEngine;
 
 namespace Codebase.Core.Actors
 {
-    public class PlayerActorStateMachine : ActorStateMachineBase
+    public class BulletActorStateMachine : ActorStateMachineBase
     {
-        protected override string LogTag => "PlayerActorStateMachine";
+        protected override string LogTag => "BulletActorStateMachine";
         protected override Dictionary<Type, IActorState> States => _states;
-
         private readonly Dictionary<Type, IActorState> _states;
 
-        public PlayerActorStateMachine(ActorStateFactory factory, ILogger logger) : base(logger)
+        public BulletActorStateMachine(ActorStateFactory factory, ILogger logger) : base(logger)
         {
             _states = new Dictionary<Type, IActorState>()
             {
