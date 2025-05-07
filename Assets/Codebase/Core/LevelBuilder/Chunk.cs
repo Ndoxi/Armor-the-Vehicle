@@ -7,10 +7,11 @@ namespace Codebase.Core.LevelBuilders
     {
         public Vector3 StartPoint => _startPointMarker.position;
         public Vector3 EndPoint => _endPointMarker.position;
-        public Vector3 Center => (StartPoint + EndPoint) / 2f;
+        public Bounds LocalSpawnArea => _spawnBounds;
 
         [SerializeField] private Transform _startPointMarker;
         [SerializeField] private Transform _endPointMarker;
+        [SerializeField] private Bounds _spawnBounds;
         private Bounds? _bounds;
 
         public Bounds GetBounds()
@@ -30,6 +31,12 @@ namespace Codebase.Core.LevelBuilders
             Vector3 min = Vector3.Min(StartPoint, EndPoint);
             Vector3 max = Vector3.Max(StartPoint, EndPoint);
             _bounds = new Bounds((min + max) / 2f, max - min);
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(_spawnBounds.center, _spawnBounds.size);
         }
     }
 }

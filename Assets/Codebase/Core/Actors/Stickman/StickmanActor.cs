@@ -69,7 +69,13 @@ namespace Codebase.Core.Actors
 
         public override void OnDeath()
         {
-            throw new NotImplementedException();
+            Debug.LogError("Not implemented");
+        }
+
+        public override void HardReset()
+        {
+            _stateMachine.EnterState<IdleState>();
+            _actorHealth.Increase(_actorHealth.Initial - _actorHealth.Current);
         }
     }
 }

@@ -8,14 +8,17 @@ namespace Codebase.Core
     {
         private GameStateMachine GameStateMachine => _gameStateMachineRef.Value;
         private readonly LevelBuilder _levelBuilder;
+        private readonly EnemiesSpawner _spawner;
         private readonly ActorsSystem _actorsSystem;
         private readonly LazyInject<GameStateMachine> _gameStateMachineRef;
 
         public InitializationState(LevelBuilder levelBuilder,
+                                   EnemiesSpawner spawner,
                                    ActorsSystem actorsSystem,
                                    LazyInject<GameStateMachine> gameStateMachineRef)
         {
             _levelBuilder = levelBuilder;
+            _spawner = spawner;
             _actorsSystem = actorsSystem;
             _gameStateMachineRef = gameStateMachineRef;
         }
@@ -23,6 +26,7 @@ namespace Codebase.Core
         public void Enter()
         {
             _levelBuilder.Initialize();
+            _spawner.Initialize();
             _actorsSystem.CreatePlayer();
             GameStateMachine.EnterState<PreparationState>();
         }

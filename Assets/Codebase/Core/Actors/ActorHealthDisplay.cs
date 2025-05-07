@@ -1,45 +1,50 @@
 ﻿using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Codebase.Core.Actors
 {
     [RequireComponent(typeof(Canvas))]
-    public abstract class ActorHealthDisplay : MonoBehaviour
+    public class ActorHealthDisplay : MonoBehaviour
     {
-        protected abstract Actor Actor { get; }
-
         [SerializeField] private bool _autoHide;
         [SerializeField] private Image _fillImage;
-        private Canvas _canvas;
+        protected Canvas _canvas;
+        protected Actor _actor;
+
+        [Inject]
+        private void Construct(Actor actor)
+        {
+            _actor = actor;
+        }
 
         private void Awake()
         {
             _canvas = GetComponent<Canvas>();
         }
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             UpdateDisplay();
-            Actor.Health.OnValueChanged += UpdateDisplay;
+            _actor.Health.OnValueChanged += UpdateDisplay;
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
-            Actor.Health.OnValueChanged -= UpdateDisplay;
+            _actor.Health.OnValueChanged -= UpdateDisplay;
         }
 
         private void UpdateDisplay(int _ = 0)
         {
-            if (Actor.Health.Current <= 0 
-                || (_autoHide && Actor.Health.Current == Actor.Health.Initial))
+            if (_actor.Health.Current <= 0 
+                || (_autoHide && _actor.Health.Current == _actor.Health.Initial))
             {
                 _canvas.enabled = false;
                 return;
             }
 
             _canvas.enabled = true;
-            _fillImage.fillAmount = (float)Actor.Health.Current / Actor.Health.Initial;
+            _fillImage.fillAmount = (float)_actor.Health.Current / _actor.Health.Initial;
         }
     }
 }

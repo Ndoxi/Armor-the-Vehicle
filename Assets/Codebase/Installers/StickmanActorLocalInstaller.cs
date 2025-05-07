@@ -31,7 +31,7 @@ namespace Codebase.Installers
 
             Container.Bind<IAttack>()
                      .To<StickmanAttack>()
-                     .AsTransient()
+                     .AsSingle()
                      .WithArguments(_attackDamage);
         }
 

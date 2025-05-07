@@ -1,5 +1,6 @@
 ﻿using Zenject;
 using UnityEngine;
+using System;
 
 namespace Codebase.Installers
 {
@@ -12,7 +13,8 @@ namespace Codebase.Installers
 
         private void BindLogger()
         {
-            Container.Bind<ILogger>().FromInstance(Debug.unityLogger);
+            Container.Bind<ILogger>()
+                     .FromInstance(Debug.unityLogger);
         }
     }
 }

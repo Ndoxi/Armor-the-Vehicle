@@ -18,6 +18,7 @@ namespace Codebase.Core.LevelBuilders
 
         private readonly LevelBuilderFactory _factory;
         private readonly List<Chunk> _activeChunks;
+        private readonly EnemiesSpawner _spawner;
         private readonly Transform _levelStartConnection;
         private readonly ILogger _logger;
         private readonly GameObject _root;
@@ -26,11 +27,13 @@ namespace Codebase.Core.LevelBuilders
 
         public LevelBuilder(LevelBuilderFactory factory,
                             IInstantiator instantiator,
+                            EnemiesSpawner spawner,
                             Transform levelStartConnection,
                             ILogger logger)
         {
-            _factory = factory;
             _activeChunks = new List<Chunk>(6);
+            _factory = factory;
+            _spawner = spawner;
             _levelStartConnection = levelStartConnection;
             _logger = logger;
             _root = CreateRoot(instantiator);
@@ -104,6 +107,7 @@ namespace Codebase.Core.LevelBuilders
             else
                 ConnectChunk(newChunk, _levelStartConnection.position);
 
+            _spawner.PopulateChunk(newChunk);
             _activeChunks.Add(newChunk);
         }
 
@@ -114,6 +118,7 @@ namespace Codebase.Core.LevelBuilders
 
             var chunk = _activeChunks[0];
             _activeChunks.RemoveAt(0);
+            _spawner.ClearChunk(chunk);
             _pool.StoreItem(chunk);
         }
 

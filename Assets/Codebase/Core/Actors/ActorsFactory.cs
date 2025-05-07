@@ -18,7 +18,8 @@ namespace Codebase.Core.Actors
 
             _resourcesMap = new Dictionary<Type, string>() 
             {
-                { typeof(PlayerActor), "Actors/PlayerActor" }
+                { typeof(PlayerActor), "Actors/PlayerActor" },
+                { typeof(StickmanActor), "Actors/StickmanActor" }
             };
         }
 

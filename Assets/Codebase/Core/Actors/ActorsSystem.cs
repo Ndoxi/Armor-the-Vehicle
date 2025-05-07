@@ -11,28 +11,20 @@ namespace Codebase.Core.Actors
 
         private readonly ActorsFactory _factory;
         private readonly Transform _playerSpawnPoint;
-        private readonly List<Actor> _actors;
         private PlayerActor _playerActor;
 
-        public ActorsSystem(ActorsFactory factory, Transform playerSpawnPoint)
+        public ActorsSystem(ActorsFactory factory, 
+                            Transform playerSpawnPoint)
         {
             _factory = factory;
             _playerSpawnPoint = playerSpawnPoint;
-            _actors = new List<Actor>(100);
         }
 
         public void CreatePlayer()
         {
             var playerActor = _factory.Create<PlayerActor>();
             playerActor.transform.position = _playerSpawnPoint.position;
-
-            _actors.Add(playerActor);
             _playerActor = playerActor;
-        }
-
-        public void CreateEnemy()
-        {
-            _actors.Add(_factory.Create<Actor>());
         }
     }
 }

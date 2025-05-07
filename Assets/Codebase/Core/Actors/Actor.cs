@@ -6,11 +6,13 @@ namespace Codebase.Core.Actors
     {
         public abstract ActorHealth Health { get; }
         protected abstract ActorStateMachineBase StateMachine { get; }
-        public abstract void OnDeath();
 
         private void FixedUpdate()
         {
             StateMachine.Update(Time.fixedDeltaTime);
         }
+
+        public abstract void HardReset();
+        public abstract void OnDeath();
     }
 }

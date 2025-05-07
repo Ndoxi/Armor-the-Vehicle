@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1193414450}
   - component: {fileID: 2550824110805816386}
   m_Layer: 5
-  m_Name: StickmanHealthCanvas
+  m_Name: ActorHealthCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,7 +84,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &1193414450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2550824110805816408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99e4ae2b1e5ee5f49858d928ced2713b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ff0efe37ed8a614b9d28e028d7ee025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _autoHide: 0

@@ -11,6 +11,7 @@ namespace Codebase.Installers
         public override void InstallBindings()
         {
             BindFactory();
+            BindSpawner();
             BindActorSystem();
         }
 
@@ -19,7 +20,14 @@ namespace Codebase.Installers
             Container.Bind<ActorsFactory>()
                      .To<ActorsFactory>()
                      .AsSingle();
-        }        
+        }  
+        
+        private void BindSpawner()
+        {
+            Container.Bind<EnemiesSpawner>()
+                     .To<EnemiesSpawner>()
+                     .AsSingle();
+        }
         
         private void BindActorSystem()
         {

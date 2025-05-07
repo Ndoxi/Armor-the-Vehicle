@@ -111,6 +111,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startPointMarker: {fileID: 7498841231425834999}
   _endPointMarker: {fileID: 7498841232157979863}
+  _spawnBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 10, y: 0, z: 52.5}
 --- !u!1001 &7498841233111370918
 PrefabInstance:
   m_ObjectHideFlags: 0

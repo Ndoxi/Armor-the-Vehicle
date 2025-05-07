@@ -43,7 +43,7 @@ namespace Codebase.Core
 
         private GameObject CreateRoot(IInstantiator instantiator)
         {
-            var root = instantiator.CreateEmptyGameObject("[Pool]");
+            var root = instantiator.CreateEmptyGameObject($"[Pool type:{typeof(TItem).Name}]");
             root.transform.position = Vector3.zero;
             root.SetActive(false);
             return root;
