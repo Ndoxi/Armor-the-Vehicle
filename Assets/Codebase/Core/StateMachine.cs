@@ -9,7 +9,7 @@ namespace Codebase.Core
         protected abstract Dictionary<Type, TState> States { get; }
         protected abstract string LogTag { get; }
 
-        protected IState _currentState;
+        protected TState _currentState;
         protected ILogger _logger;
 
         public StateMachine(ILogger logger)
@@ -17,7 +17,7 @@ namespace Codebase.Core
             _logger = logger;
         }
 
-        public void EnterState<T>() where T : class, IState
+        public void EnterState<T>() where T : class, TState
         {
             var newState = GetState<T>();
             if (_currentState != null && newState.GetType() == _currentState.GetType())
@@ -36,7 +36,7 @@ namespace Codebase.Core
             _currentState?.Exit();
         }
 
-        private IState GetState<T>() where T : class, IState
+        private TState GetState<T>() where T : class, TState
         {
             return States[typeof(T)];
         }

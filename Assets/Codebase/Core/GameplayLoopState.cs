@@ -46,7 +46,7 @@ namespace Codebase.Core
             _stateExitCancellationTokenSource?.Cancel();
             _stateExitCancellationTokenSource?.Dispose();
 
-            _actorsSystem.PlayerActor.StateMachine.EnterState<IdleState>();
+            _actorsSystem.PlayerActor.SetIdle();
         }
 
         private void AllowPlayerMovementWithDelay()
@@ -59,7 +59,7 @@ namespace Codebase.Core
             try
             {
                 await UniTask.Delay(delayMs, cancellationToken: cancellationToken);
-                _actorsSystem.PlayerActor.StateMachine.EnterState<DollyState>();
+                _actorsSystem.PlayerActor.SetDolly();
             }
             catch (OperationCanceledException)
             {

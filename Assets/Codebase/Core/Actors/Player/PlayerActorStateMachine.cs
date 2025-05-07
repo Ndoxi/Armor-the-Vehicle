@@ -11,12 +11,12 @@ namespace Codebase.Core.Actors
 
         private readonly Dictionary<Type, IActorState> _states;
 
-        public PlayerActorStateMachine(PlayerActorStateFactory factory, ILogger logger) : base(logger)
+        public PlayerActorStateMachine(ActorStateFactory factory, ILogger logger) : base(logger)
         {
             _states = new Dictionary<Type, IActorState>() 
             {
                 { typeof(IdleState), factory.Create<IdleState>() },
-                { typeof(DollyState), factory.Create<DollyState>() }
+                { typeof(MovementState), factory.Create<MovementState>() }
             };
         }
     }

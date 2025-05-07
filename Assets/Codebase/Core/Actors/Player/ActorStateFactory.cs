@@ -2,11 +2,11 @@
 
 namespace Codebase.Core.Actors
 {
-    public class PlayerActorStateFactory
+    public class ActorStateFactory
     {
         private readonly IInstantiator _instantiator;
 
-        public PlayerActorStateFactory(IInstantiator instantiator)
+        public ActorStateFactory(IInstantiator instantiator)
         {
             _instantiator = instantiator;
         }

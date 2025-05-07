@@ -5,12 +5,14 @@ using UnityEngine;
 namespace Codebase.Installers
 {
     [RequireComponent(typeof(PlayerActor))]
-    public class PlayerActorInstaller : MonoInstaller
+    public class PlayerActorLocalInstaller : MonoInstaller
     {
+        [SerializeField] private int _initialHealthValue;
 
         public override void InstallBindings()
         {
             BindActor();
+            BindMovement();
             BindStateMachineFactory();
             BindStateMachine();
             BindPathBuilder();
@@ -18,14 +20,25 @@ namespace Codebase.Installers
 
         private void BindActor()
         {
-            Container.Bind<Actor>()
+            Container.Bind<ActorHealth>()
+                     .To<ActorHealth>()
+                     .AsSingle()
+                     .WithArguments(_initialHealthValue);
+
+            Container.Bind(typeof(Actor), typeof(PlayerActor))
                      .FromInstance(GetComponent<PlayerActor>());
+        }
+
+        protected void BindMovement()
+        {
+            Container.Bind<ActorMovement>()
+                     .FromInstance(GetComponent<ActorMovement>());
         }
 
         private void BindStateMachineFactory()
         {
-            Container.Bind<PlayerActorStateFactory>()
-                     .To<PlayerActorStateFactory>()
+            Container.Bind<ActorStateFactory>()
+                     .To<ActorStateFactory>()
                      .AsTransient();
         } 
 
@@ -33,14 +46,14 @@ namespace Codebase.Installers
         {
             Container.Bind<ActorStateMachineBase>()
                      .To<PlayerActorStateMachine>()
-                     .AsTransient();
+                     .AsSingle();
         }
 
         private void BindPathBuilder()
         {
             Container.Bind<IPathBuilder>()
                      .To<DollyPathBuilder>()
-                     .AsTransient();
+                     .AsSingle();
         }
     }
 }

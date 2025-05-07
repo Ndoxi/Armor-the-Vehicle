@@ -10,8 +10,15 @@ namespace Codebase.Installers
 
         public override void InstallBindings()
         {
+            BindMainCamera();
             BindCameraTransitionsManager();
             BindCinematicCameraService();
+        }
+
+        private void BindMainCamera()
+        {
+            Container.Bind<Camera>()
+                     .FromInstance(Camera.main);
         }
 
         private void BindCameraTransitionsManager()
