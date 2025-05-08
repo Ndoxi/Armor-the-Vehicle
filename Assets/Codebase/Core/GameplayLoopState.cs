@@ -65,7 +65,7 @@ namespace Codebase.Core
 
             _levelProgress.Dispose();
             _levelBuilder.DeactivateChunksLoading();
-            _levelBuilder.ClearActiveChunks();
+            _levelBuilder.DespawnChunks();
 
             _stateExitCancellationTokenSource?.Cancel();
             _stateExitCancellationTokenSource?.Dispose();
@@ -80,6 +80,7 @@ namespace Codebase.Core
 
         private void FinishLevel(LevelProgressController.State result)
         {
+            _levelBuilder.ClearChunks();
             _view.OnLevelCompleted(result);
             _actorsSystem.PlayerActor.HardReset();
         }

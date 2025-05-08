@@ -13,7 +13,7 @@ namespace Codebase.Core.Actors
         private void FixedUpdate()
         {
             StateMachine.Update(Time.fixedDeltaTime);
-        }
+        }        
 
         public virtual void OnDeath()
         {
