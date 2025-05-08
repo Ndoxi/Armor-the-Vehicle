@@ -10,9 +10,12 @@ namespace Codebase.Core.Actors
 
         public override ActorHealth Health => _actorHealth;
 
+        [SerializeField] private ActorHealthDisplay _healthDisplay;
         private ActorStateMachineBase _stateMachine;
         private ActorHealth _actorHealth;
         private PlayerActorTurret _turret;
+        private IStateEvent<IActorState> _onEnterStateEvent;
+        private IStateEvent<IActorState> _onExitStateEvent;
 
         [Inject]
         private void Construct(ActorStateMachineBase stateMachine, 
@@ -22,6 +25,8 @@ namespace Codebase.Core.Actors
             _stateMachine = stateMachine;
             _actorHealth = actorHealth;
             _turret = turret;
+            _onEnterStateEvent = stateMachine.OnEnterEvent;
+            _onExitStateEvent = stateMachine.OnExitEvent;
         }
 
         private void Awake()
@@ -32,11 +37,15 @@ namespace Codebase.Core.Actors
         private void OnEnable()
         {
             Health.OnValueChanged += ValidateHealth;
+            _onEnterStateEvent.AddListener<PlayerMoveAndShootState>(EnableHealthBar);
+            _onExitStateEvent.AddListener<PlayerMoveAndShootState>(DisableHealthBar);
         }
 
         private void OnDisable()
         {
             Health.OnValueChanged -= ValidateHealth;
+            _onEnterStateEvent.RemoveListener<PlayerMoveAndShootState>(EnableHealthBar);
+            _onExitStateEvent.RemoveListener<PlayerMoveAndShootState>(DisableHealthBar);
         }
 
         public void SetDolly()
@@ -68,6 +77,17 @@ namespace Codebase.Core.Actors
             _stateMachine.EnterState<IdleState>();
             _actorHealth.Increase(_actorHealth.Initial - _actorHealth.Current);
             _turret.HardReset();
+            DisableHealthBar();
+        }
+
+        private void EnableHealthBar()
+        {
+            _healthDisplay.gameObject.SetActive(true);
+        }
+
+        private void DisableHealthBar()
+        {
+            _healthDisplay.gameObject.SetActive(false);
         }
     }
 }

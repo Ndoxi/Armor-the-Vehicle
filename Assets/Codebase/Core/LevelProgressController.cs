@@ -23,7 +23,7 @@ namespace Codebase.Core
         {
             _playerActor = actor;
             _levelStartPosition = levelStartPosition;
-            _distanseToComplete = 200;
+            _distanseToComplete = 300;
 
             _playerActor.OnDeathEvent += OnLevelFailed;
         }
