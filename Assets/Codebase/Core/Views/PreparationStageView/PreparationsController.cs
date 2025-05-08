@@ -6,9 +6,9 @@ namespace Codebase.Core
     {
         private readonly LazyInject<GameStateMachine> _gameStateMachineLazy;
 
-        public PreparationsController(LazyInject<GameStateMachine> gameStateMachineLazy)
+        public PreparationsController(LazyInject<GameStateMachine> gameStateMachineRef)
         {
-            _gameStateMachineLazy = gameStateMachineLazy;
+            _gameStateMachineLazy = gameStateMachineRef;
         }
 
         public void FinishPreparations()

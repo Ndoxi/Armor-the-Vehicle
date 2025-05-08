@@ -20,7 +20,8 @@ namespace Codebase.Core.Factories
             _root = CreateRoot();
             _resourcesMap = new Dictionary<Type, string>()
             {
-                { typeof(PreparationView), "Views/PreparationStateView" }
+                { typeof(PreparationView), "Views/PreparationStateView" },
+                { typeof(GameplayLoopStateView), "Views/GameplayLoopStateView" }
             };
         }
 

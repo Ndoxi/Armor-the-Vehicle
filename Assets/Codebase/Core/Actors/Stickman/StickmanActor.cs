@@ -67,13 +67,9 @@ namespace Codebase.Core.Actors
             _attack.Perform(playerActor);
         }
 
-        public override void OnDeath()
-        {
-            Debug.LogError("Not implemented");
-        }
-
         public override void HardReset()
         {
+            base.HardReset();
             _stateMachine.EnterState<IdleState>();
             _actorHealth.Increase(_actorHealth.Initial - _actorHealth.Current);
         }

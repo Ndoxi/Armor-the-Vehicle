@@ -18,7 +18,8 @@ namespace Codebase.Core.Factories
 
             _buiders = new Dictionary<Type, Func<IState>>()
             {
-                { typeof(PreparationState), PreparationStateBuilder }
+                { typeof(PreparationState), PreparationStateBuilder },
+                { typeof(GameplayLoopState), GameplayStateBuilder }
             };
         }
 
@@ -34,6 +35,13 @@ namespace Codebase.Core.Factories
             var stateView = _viewFactory.Create<PreparationView>();
             var additionalArgs = new object[] { stateView };
             return _instantiator.Instantiate<PreparationState>(additionalArgs);
+        }
+
+        private IState GameplayStateBuilder()
+        {
+            var stateView = _viewFactory.Create<GameplayLoopStateView>();
+            var additionalArgs = new object[] { stateView };
+            return _instantiator.Instantiate<GameplayLoopState>(additionalArgs);
         }
 
         private IState DefaultBuilder<T>() where T : class, IState

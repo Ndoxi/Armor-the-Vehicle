@@ -15,7 +15,7 @@ namespace Codebase.Core.Actors
             _states = new Dictionary<Type, IActorState>()
             {
                 { typeof(IdleState), factory.Create<IdleState>() },
-                { typeof(MovementState), factory.Create<MovementState>() },
+                { typeof(BulletMovementState), factory.Create<BulletMovementState>() },
                 { typeof(DeathState), factory.Create<DeathState>() }
             };
         }

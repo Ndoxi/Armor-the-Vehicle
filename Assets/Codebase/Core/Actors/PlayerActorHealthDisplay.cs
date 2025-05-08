@@ -16,27 +16,28 @@ namespace Codebase.Core.Actors
 
         protected override void OnEnable()
         {
-            base.OnEnable();
-            DisableCanvas();
-            _onEnterStateEvent.AddListener<MovementState>(EnableCanvas);
-            _onExitStateEvent.AddListener<MovementState>(DisableCanvas);
+            DisableHealthBar();
+            _onEnterStateEvent.AddListener<PlayerMoveAndShootState>(EnableHealthBar);
+            _onExitStateEvent.AddListener<PlayerMoveAndShootState>(DisableHealthBar);
         }
 
         protected override void OnDisable()
         {
-            base.OnDisable();
-            _onEnterStateEvent.RemoveListener<MovementState>(EnableCanvas);
-            _onExitStateEvent.RemoveListener<MovementState>(DisableCanvas);
+            _onEnterStateEvent.RemoveListener<PlayerMoveAndShootState>(EnableHealthBar);
+            _onExitStateEvent.RemoveListener<PlayerMoveAndShootState>(DisableHealthBar);
         }
 
-        private void EnableCanvas()
+        private void EnableHealthBar()
         {
             _canvas.enabled = true;
+            UpdateDisplay();
+            _actor.Health.OnValueChanged += UpdateDisplay;
         }
 
-        private void DisableCanvas()
+        private void DisableHealthBar()
         {
             _canvas.enabled = false;
+            _actor.Health.OnValueChanged -= UpdateDisplay;
         }
     }
 }

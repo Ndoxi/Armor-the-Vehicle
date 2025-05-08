@@ -39,7 +39,7 @@ namespace Codebase.Installers
         {
             Container.Bind<ActorStateFactory>()
                      .To<ActorStateFactory>()
-                     .AsTransient();
+                     .AsSingle();
         }
 
         private void BindStateMachine()

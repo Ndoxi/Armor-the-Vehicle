@@ -1,6 +1,7 @@
 ﻿using Zenject;
 using Codebase.Core.Actors;
 using UnityEngine;
+using Codebase.Core;
 
 namespace Codebase.Installers
 {
@@ -20,10 +21,17 @@ namespace Codebase.Installers
 
         private void BindActor()
         {
+            Container.Bind<ITurretRotationController>()
+                     .To<TurretRotationController>()
+                     .AsSingle();
+
             Container.Bind<ActorHealth>()
                      .To<ActorHealth>()
                      .AsSingle()
                      .WithArguments(_initialHealthValue);
+
+            Container.Bind<PlayerActorTurret>()
+                     .FromInstance(GetComponent<PlayerActorTurret>());
 
             Container.Bind(typeof(Actor), typeof(PlayerActor))
                      .FromInstance(GetComponent<PlayerActor>());
@@ -39,7 +47,7 @@ namespace Codebase.Installers
         {
             Container.Bind<ActorStateFactory>()
                      .To<ActorStateFactory>()
-                     .AsTransient();
+                     .AsSingle();
         } 
 
         private void BindStateMachine()

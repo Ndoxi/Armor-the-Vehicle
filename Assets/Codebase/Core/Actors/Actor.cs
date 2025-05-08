@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
 namespace Codebase.Core.Actors
 {
     public abstract class Actor : MonoBehaviour
     {
+        public event Action OnDeathEvent;
+        
         public abstract ActorHealth Health { get; }
         protected abstract ActorStateMachineBase StateMachine { get; }
 
@@ -12,7 +15,14 @@ namespace Codebase.Core.Actors
             StateMachine.Update(Time.fixedDeltaTime);
         }
 
-        public abstract void HardReset();
-        public abstract void OnDeath();
+        public virtual void OnDeath()
+        {
+            OnDeathEvent?.Invoke();
+        }
+
+        public virtual void HardReset() 
+        {
+            OnDeathEvent = null;
+        }
     }
 }

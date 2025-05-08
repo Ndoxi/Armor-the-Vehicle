@@ -9,8 +9,8 @@ namespace Codebase.Core.Actors
     public class EnemiesSpawner : Spawner<StickmanActor>
     {
         protected override int InitialPoolSize => 33;
-        private const int MinEnemiesPerChunk = 7;
-        private const int MaxEnemiesPerChunk = 13;
+        private const int MinEnemiesPerChunk = 4;
+        private const int MaxEnemiesPerChunk = 8;
 
         private readonly IRandom _random;
         private readonly Dictionary<Chunk, List<StickmanActor>> _managedEnemiesMap;

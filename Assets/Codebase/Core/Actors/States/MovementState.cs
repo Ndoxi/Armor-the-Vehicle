@@ -15,11 +15,11 @@ namespace Codebase.Core.Actors
             _pathBuilder = pathBuilder;
         }
 
-        public void Enter() { }
+        public virtual void Enter() { }
 
-        public void Exit() { }
+        public virtual void Exit() { }
 
-        public void Update(float deltaTime)
+        public virtual void Update(float deltaTime)
         {
             _actorMovement.MoveTowards(_pathBuilder.GetDirection(), deltaTime);
         }

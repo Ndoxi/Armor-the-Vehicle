@@ -34,7 +34,7 @@ namespace Codebase.Core.Actors
             _actor.Health.OnValueChanged -= UpdateDisplay;
         }
 
-        private void UpdateDisplay(int _ = 0)
+        protected void UpdateDisplay(int _ = 0)
         {
             if (_actor.Health.Current <= 0 
                 || (_autoHide && _actor.Health.Current == _actor.Health.Initial))

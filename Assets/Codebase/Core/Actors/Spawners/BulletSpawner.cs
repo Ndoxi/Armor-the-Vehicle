@@ -7,5 +7,10 @@ namespace Codebase.Core.Actors
         protected override int InitialPoolSize => 33;
 
         public BulletSpawner(ActorsFactory factory, IInstantiator instantiator) : base(factory, instantiator) { }
+
+        public BulletActor SpawnOne()
+        {
+            return GetFromPoolOrSpawn();
+        }
     }
 }

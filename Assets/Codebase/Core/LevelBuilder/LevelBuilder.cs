@@ -58,12 +58,16 @@ namespace Codebase.Core.LevelBuilders
         {
             _loopCancellationTokenSource?.Cancel();
             _loopCancellationTokenSource?.Dispose();
+            _loopCancellationTokenSource = null;
         }
 
         public void ClearActiveChunks()
         {
-            foreach (var actuveChunk in _activeChunks)
-                _pool.StoreItem(actuveChunk);
+            foreach (var activeChunk in _activeChunks)
+            {
+                _spawner.ClearChunk(activeChunk);
+                _pool.StoreItem(activeChunk);
+            }
 
             _activeChunks.Clear();
         }
