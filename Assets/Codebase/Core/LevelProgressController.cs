@@ -49,8 +49,8 @@ namespace Codebase.Core
             if (_finished)
                 return;
 
-            _finished = true;
             OnFinish?.Invoke(State.Failed);
+            _finished = true;
         }
 
         private void OnLevelCompleted()
@@ -58,8 +58,8 @@ namespace Codebase.Core
             if (_finished)
                 return;
 
-            _finished = true;
             OnFinish?.Invoke(State.Completed);
+            _finished = true;
         }
     }
 }
