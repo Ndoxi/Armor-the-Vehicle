@@ -8,8 +8,9 @@ namespace Codebase.Core.Actors
         [SerializeField] private float _rotationSpeed;
         private ActorAnimator _actorAnimator;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _actorAnimator = GetComponent<ActorAnimator>();
         }
 
@@ -25,7 +26,7 @@ namespace Codebase.Core.Actors
         {
             var flatDirection = new Vector3(direction.x , 0, direction.z);
             var targetRotation = Quaternion.LookRotation(flatDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, deltaTime * _rotationSpeed);
+            _rigidbody.rotation = Quaternion.Slerp(transform.rotation, targetRotation, deltaTime * _rotationSpeed);
         }
     }
 }
