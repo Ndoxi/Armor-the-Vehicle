@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Codebase.Core
 {
-    public class LevelProgressController : IDisposable
+    public class LevelProgressChecker : IDisposable
     {
         public enum State { Completed, Failed }
 
@@ -19,7 +19,7 @@ namespace Codebase.Core
         private int _currentDistanse;
         private bool _finished;
 
-        public LevelProgressController(Actor actor, Vector3 levelStartPosition)
+        public LevelProgressChecker(Actor actor, Vector3 levelStartPosition)
         {
             _playerActor = actor;
             _levelStartPosition = levelStartPosition;

@@ -47,16 +47,16 @@ namespace Codebase.Core.Views
             _resetLevelButton.gameObject.SetActive(false);
         }
 
-        public void OnLevelCompleted(LevelProgressController.State result)
+        public void OnLevelCompleted(LevelProgressChecker.State result)
         {
             _resetLevelButton.gameObject.SetActive(true);
 
             switch (result)
             {
-                case LevelProgressController.State.Completed:
+                case LevelProgressChecker.State.Completed:
                     _completedRoot.gameObject.SetActive(true);
                     break;
-                case LevelProgressController.State.Failed:
+                case LevelProgressChecker.State.Failed:
                     _failRoot.gameObject.SetActive(true);
                     break;
             }

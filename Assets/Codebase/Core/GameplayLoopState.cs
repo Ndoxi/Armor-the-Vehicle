@@ -22,7 +22,7 @@ namespace Codebase.Core
         private readonly CinematicCameraService _cameraService;
         private readonly ILogger _logger;
         private CancellationTokenSource _stateExitCancellationTokenSource;
-        private LevelProgressController _levelProgress;
+        private LevelProgressChecker _levelProgress;
         
         public GameplayLoopState(LazyInject<GameStateMachine> gameStateMachineRef, 
                                  GameplayLoopStateView view, 
@@ -41,7 +41,7 @@ namespace Codebase.Core
 
         public void Enter()
         {
-            _levelProgress = new LevelProgressController(_actorsSystem.PlayerActor, _actorsSystem.PlayerActorSpawnPoint);
+            _levelProgress = new LevelProgressChecker(_actorsSystem.PlayerActor, _actorsSystem.PlayerActorSpawnPoint);
             _stateExitCancellationTokenSource = new CancellationTokenSource();
             
             _levelProgress.OnFinish += FinishLevel;
@@ -78,7 +78,7 @@ namespace Codebase.Core
             _gameStateMachineRef.Value.EnterState<PreparationState>();
         }
 
-        private void FinishLevel(LevelProgressController.State result)
+        private void FinishLevel(LevelProgressChecker.State result)
         {
             _levelBuilder.ClearChunks();
             _view.OnLevelCompleted(result);
