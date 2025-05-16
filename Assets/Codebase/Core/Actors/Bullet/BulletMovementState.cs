@@ -13,7 +13,7 @@ namespace Codebase.Core.Actors
                                    IPathBuilder pathBuilder) : base(actorMovement, pathBuilder)
         {
             _stateMachineRef = stateMachineRef;
-            _lifetime = 5f;
+            _lifetime = 3f;
         }
 
         public override void Enter()

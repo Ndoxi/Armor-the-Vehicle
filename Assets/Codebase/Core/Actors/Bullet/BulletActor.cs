@@ -6,16 +6,23 @@ namespace Codebase.Core.Actors
     public class BulletActor : Actor
     {
         public override ActorHealth Health => null;
-        [SerializeField] private StickmanTrigger _attackTrigger;
+
         protected override ActorStateMachineBase StateMachine => _actorStateMachine;
+        protected override Rigidbody Rigidbody => _rigidbody;
+
+        [SerializeField] private StickmanTrigger _attackTrigger;
         private ActorStateMachineBase _actorStateMachine;
         private IAttack _attack;
+        private Rigidbody _rigidbody;
 
         [Inject]
-        private void Construct(ActorStateMachineBase actorStateMachine, IAttack attack)
+        private void Construct(ActorStateMachineBase actorStateMachine,
+                               IAttack attack,
+                               Rigidbody rigidbody)
         {
             _actorStateMachine = actorStateMachine;
             _attack = attack;
+            _rigidbody = rigidbody;
         }
 
         private void Awake()
@@ -39,7 +46,6 @@ namespace Codebase.Core.Actors
 
         public override void HardReset()
         {
-            base.HardReset();
             SetInitialState();
         }
 

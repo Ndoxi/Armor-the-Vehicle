@@ -25,6 +25,8 @@ namespace Codebase.Installers
                      .To<ActorHealth>()
                      .AsSingle()
                      .WithArguments(_initialHealthValue);
+            Container.Bind<Rigidbody>()
+                     .FromInstance(GetComponent<Rigidbody>());
 
             Container.Bind(typeof(Actor), typeof(StickmanActor))
                      .FromInstance(GetComponent<StickmanActor>());

@@ -2,11 +2,11 @@
 
 namespace Codebase.Core.Actors
 {
-    public class DollyPathBuilder : IPathBuilder
+    public class CarPathBuilder : IPathBuilder
     {
         private readonly Actor _actor;
 
-        public DollyPathBuilder(Actor actor)
+        public CarPathBuilder(Actor actor)
         {
             _actor = actor;
         }

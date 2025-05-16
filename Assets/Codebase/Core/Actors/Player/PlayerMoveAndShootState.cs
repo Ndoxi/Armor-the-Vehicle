@@ -29,12 +29,4 @@
             }
         }
     }
-
-    public class PlayerActorSwipeInput : ISwipeInput
-    {
-        public float GetHorizontal()
-        {
-            throw new System.NotImplementedException();
-        }
-    }
 }

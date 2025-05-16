@@ -6,9 +6,10 @@ namespace Codebase.Core.Actors
 {
     public class PlayerActor : Actor
     {
-        protected override ActorStateMachineBase StateMachine => _stateMachine;
-
         public override ActorHealth Health => _actorHealth;
+
+        protected override ActorStateMachineBase StateMachine => _stateMachine;
+        protected override Rigidbody Rigidbody => _rigidbody;
 
         [SerializeField] private ActorHealthDisplay _healthDisplay;
         private ActorStateMachineBase _stateMachine;
@@ -16,17 +17,20 @@ namespace Codebase.Core.Actors
         private PlayerActorTurret _turret;
         private IStateEvent<IActorState> _onEnterStateEvent;
         private IStateEvent<IActorState> _onExitStateEvent;
+        private Rigidbody _rigidbody;
 
         [Inject]
         private void Construct(ActorStateMachineBase stateMachine, 
                                ActorHealth actorHealth, 
-                               PlayerActorTurret turret)
+                               PlayerActorTurret turret, 
+                               Rigidbody rigidbody)
         {
             _stateMachine = stateMachine;
             _actorHealth = actorHealth;
             _turret = turret;
             _onEnterStateEvent = stateMachine.OnEnterEvent;
             _onExitStateEvent = stateMachine.OnExitEvent;
+            _rigidbody = rigidbody;
         }
 
         private void Awake()
@@ -53,15 +57,8 @@ namespace Codebase.Core.Actors
             _stateMachine.EnterState<PlayerMoveAndShootState>();
         }
 
-        public override void OnDeath()
-        {
-            base.OnDeath();
-            _stateMachine.EnterState<DeathState>();
-        }
-
         public override void HardReset()
         {
-            base.HardReset();
             SetInitialState();
         }
 

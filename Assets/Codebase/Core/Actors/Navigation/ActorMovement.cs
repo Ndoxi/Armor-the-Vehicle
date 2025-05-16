@@ -3,15 +3,15 @@ using Zenject;
 
 namespace Codebase.Core.Actors
 {
-    [RequireComponent(typeof(Rigidbody))]
     public class ActorMovement : MonoBehaviour
     {
         [SerializeField] protected float _speed;
         protected Rigidbody _rigidbody;
 
-        protected virtual void Awake()
+        [Inject]
+        private void Construct(Rigidbody rigidbody)
         {
-            _rigidbody = GetComponent<Rigidbody>();
+            _rigidbody = rigidbody;
         }
 
         public virtual void MoveTowards(Vector3 direction, float deltaTime)

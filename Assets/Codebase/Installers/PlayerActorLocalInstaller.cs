@@ -21,6 +21,9 @@ namespace Codebase.Installers
 
         private void BindActor()
         {
+            Container.Bind<Rigidbody>()
+                     .FromInstance(GetComponent<Rigidbody>());
+
             Container.Bind<ITurretRotationController>()
                      .To<TurretRotationController>()
                      .AsSingle();
@@ -60,7 +63,7 @@ namespace Codebase.Installers
         private void BindPathBuilder()
         {
             Container.Bind<IPathBuilder>()
-                     .To<DollyPathBuilder>()
+                     .To<CarPathBuilder>()
                      .AsSingle();
         }
     }

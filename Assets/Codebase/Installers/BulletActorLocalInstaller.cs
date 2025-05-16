@@ -25,6 +25,9 @@ namespace Codebase.Installers
                      .AsSingle()
                      .WithArguments(_damage);
 
+            Container.Bind<Rigidbody>()
+                     .FromInstance(GetComponent<Rigidbody>());
+
             Container.Bind(typeof(Actor), typeof(BulletActor))
                      .FromInstance(GetComponent<BulletActor>());
         }

@@ -24,6 +24,9 @@ namespace Codebase.Core
 
         public void StoreItem(TItem item)
         {
+            if (_content.Contains(item))
+                throw new System.InvalidOperationException();
+
             item.transform.SetParent(_root.transform);
             _content.Add(item);
         }
@@ -31,8 +34,8 @@ namespace Codebase.Core
         public TItem GetItem()
         {
             var item = _content[0];
-            item.transform.SetParent(null);
             _content.RemoveAt(0);
+            item.transform.SetParent(null);
             return item;
         }
 

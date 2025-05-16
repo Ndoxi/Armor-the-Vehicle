@@ -89,7 +89,7 @@ namespace Codebase.Core.LevelBuilders
                 {
                     await UniTask.Delay(LoopUpdateIntervalMs, cancellationToken: cancellationToken);
 
-                    var targetChunk = _activeChunks[_activeChunks.Count / 2 - 1];
+                    var targetChunk = _activeChunks[^2];
                     if (targetChunk.GetBounds().Contains(target.position))
                     {
                         DestroyChunk();

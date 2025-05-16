@@ -8,9 +8,8 @@ namespace Codebase.Core.Actors
         [SerializeField] private float _rotationSpeed;
         private ActorAnimator _actorAnimator;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
             _actorAnimator = GetComponent<ActorAnimator>();
         }
 

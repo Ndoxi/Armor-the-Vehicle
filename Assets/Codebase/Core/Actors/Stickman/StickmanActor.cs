@@ -6,28 +6,31 @@ namespace Codebase.Core.Actors
 {
     public class StickmanActor : Actor
     {
-        [SerializeField] private PlayerTrigger _detectionTrigger;
-        [SerializeField] private PlayerTrigger _attackTrigger;
-
-        protected override ActorStateMachineBase StateMachine => _stateMachine;
-
         public override ActorHealth Health => _actorHealth;
 
+        protected override ActorStateMachineBase StateMachine => _stateMachine;
+        protected override Rigidbody Rigidbody => _rigidbody;
+
+        [SerializeField] private PlayerTrigger _detectionTrigger;
+        [SerializeField] private PlayerTrigger _attackTrigger;
         private ActorStateMachineBase _stateMachine;
         private ActorHealth _actorHealth;
         private ChasePathBuilder _pathBuilder;
         private IAttack _attack;
+        private Rigidbody _rigidbody;
 
         [Inject]
         private void Construct(ActorStateMachineBase stateMachine,
                                ActorHealth actorHealth,
                                ChasePathBuilder pathBuilder,
-                               IAttack attack)
+                               IAttack attack, 
+                               Rigidbody rigidbody)
         {
             _stateMachine = stateMachine;
             _actorHealth = actorHealth;
             _pathBuilder = pathBuilder;
             _attack = attack;
+            _rigidbody = rigidbody;
         }
 
         private void Awake()
@@ -69,7 +72,6 @@ namespace Codebase.Core.Actors
 
         public override void HardReset()
         {
-            base.HardReset();
             _stateMachine.EnterState<IdleState>();
             _actorHealth.Increase(_actorHealth.Initial - _actorHealth.Current);
         }

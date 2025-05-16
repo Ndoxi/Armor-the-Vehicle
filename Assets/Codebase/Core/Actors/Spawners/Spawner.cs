@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Zenject;
 
 namespace Codebase.Core.Actors
@@ -9,12 +10,14 @@ namespace Codebase.Core.Actors
 
         protected readonly ActorsFactory _factory;
         protected readonly Pool<T> _pool;
+        private readonly Dictionary<T, Action> _despawnHandlers; 
 
         public Spawner(ActorsFactory factory,
                        IInstantiator instantiator)
         {
             _factory = factory;
             _pool = new Pool<T>(instantiator);
+            _despawnHandlers = new Dictionary<T, Action>();
         }
 
         public void Initialize()
@@ -33,6 +36,12 @@ namespace Codebase.Core.Actors
 
         private void Despawn(T actor)
         {
+            if (_despawnHandlers.TryGetValue(actor, out Action handler))
+            {
+                actor.OnDeathEvent -= handler;
+                _despawnHandlers.Remove(actor);
+            }
+
             actor.HardReset();
             _pool.StoreItem(actor);
         }
@@ -40,19 +49,34 @@ namespace Codebase.Core.Actors
         protected T GetFromPoolOrSpawn()
         {
             if (!_pool.Empty())
-            {
-                var actor = _pool.GetItem();
-                actor.OnDeathEvent += () => Despawn(actor);
-                return actor;
-            }
+                return GetFromPool();
             return Spawn();
         }
 
         protected T Spawn()
         {
             var actor =  _factory.Create<T>();
-            actor.OnDeathEvent += () => Despawn(actor);
+
+            _despawnHandlers[actor] = DespawnHandler;
+            actor.OnDeathEvent += DespawnHandler;
+
             return actor;
+
+            void DespawnHandler() => Despawn(actor);
+        }
+
+        protected T GetFromPool()
+        {
+            var actor = _pool.GetItem();
+
+            if (_despawnHandlers.TryGetValue(actor, out var existing))
+                actor.OnDeathEvent -= existing;
+            _despawnHandlers[actor] = DespawnHandler;
+            actor.OnDeathEvent += DespawnHandler;
+
+            return actor;
+
+            void DespawnHandler() => Despawn(actor);
         }
     }
 }
