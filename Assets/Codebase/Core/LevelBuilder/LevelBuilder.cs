@@ -152,7 +152,7 @@ namespace Codebase.Core.LevelBuilders
 
         private Chunk GetFromPoolOrSpawn()
         {
-            if (!_pool.Empty())
+            if (!_pool.IsEmpty())
                 return _pool.GetItem();
             return _factory.Create();
         }

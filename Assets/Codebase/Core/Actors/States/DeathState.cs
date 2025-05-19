@@ -1,4 +1,6 @@
-﻿namespace Codebase.Core.Actors
+﻿using Zenject;
+
+namespace Codebase.Core.Actors
 {
     public class DeathState : IActorState
     {

@@ -34,7 +34,7 @@ namespace Codebase.Core.Actors
             _pool.Initialize(initialActors);
         }
 
-        private void Despawn(T actor)
+        protected void Despawn(T actor)
         {
             if (_despawnHandlers.TryGetValue(actor, out Action handler))
             {
@@ -48,7 +48,7 @@ namespace Codebase.Core.Actors
 
         protected T GetFromPoolOrSpawn()
         {
-            if (!_pool.Empty())
+            if (!_pool.IsEmpty())
                 return GetFromPool();
             return Spawn();
         }

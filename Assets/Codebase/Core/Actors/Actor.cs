@@ -27,6 +27,16 @@ namespace Codebase.Core.Actors
             Rigidbody.rotation = rotation;
         }
 
+        public Vector3 GetPosition()
+        {
+            return Rigidbody.position;
+        }
+
+        public Quaternion GetRotation()
+        {
+            return Rigidbody.rotation;
+        }
+
         public void SetPositionAndRotation(Vector3 position, Quaternion rotation)
         {
             Rigidbody.position = position;

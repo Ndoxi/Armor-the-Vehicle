@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 using Zenject;
 
 namespace Codebase.Core.Actors
@@ -14,15 +15,18 @@ namespace Codebase.Core.Actors
         private ActorStateMachineBase _actorStateMachine;
         private IAttack _attack;
         private Rigidbody _rigidbody;
+        private BulletActorVFXController _vfxController;
 
         [Inject]
         private void Construct(ActorStateMachineBase actorStateMachine,
                                IAttack attack,
-                               Rigidbody rigidbody)
+                               Rigidbody rigidbody, 
+                               BulletActorVFXController vfxController)
         {
             _actorStateMachine = actorStateMachine;
             _attack = attack;
             _rigidbody = rigidbody;
+            _vfxController = vfxController;
         }
 
         private void Awake()
@@ -32,14 +36,14 @@ namespace Codebase.Core.Actors
 
         private void OnEnable()
         {
-            _attackTrigger.OnEnter += PerformAttack;
+            _attackTrigger.OnEnterWithContactPoint += PerformAttack;
             _actorStateMachine.OnEnterEvent.AddListener<BulletMovementState>(EnableCollider);
             _actorStateMachine.OnExitEvent.AddListener<BulletMovementState>(DisableCollider);
         }
 
         private void OnDisable()
         {
-            _attackTrigger.OnEnter -= PerformAttack;
+            _attackTrigger.OnEnterWithContactPoint -= PerformAttack;
             _actorStateMachine.OnEnterEvent.RemoveListener<BulletMovementState>(EnableCollider);
             _actorStateMachine.OnExitEvent.RemoveListener<BulletMovementState>(DisableCollider);
         }
@@ -54,10 +58,18 @@ namespace Codebase.Core.Actors
             _actorStateMachine.EnterState<BulletMovementState>();
         }
 
-        private void PerformAttack(Actor actor)
+        private void PerformAttack(Actor target, Vector3 closestPoint)
         {
-            _attack.Perform(actor);
+            _attack.Perform(target);
+            PlayHitEffect(target, closestPoint);
+
             _actorStateMachine.EnterState<DeathState>();
+        }
+
+        private void PlayHitEffect(Actor target, Vector3 closestPoint)
+        {
+            var rotation = Quaternion.LookRotation(target.GetPosition() - closestPoint, Vector3.left);
+            _vfxController.Play(closestPoint, rotation);
         }
 
         private void SetInitialState()

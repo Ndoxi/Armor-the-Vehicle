@@ -97,8 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 66481b483bfdf5c49a4d65572c4f37ef, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 2bd8701fce137e1439a4edf68f0d6fda, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 111207268}
   - component: {fileID: 111207269}
   - component: {fileID: 111207270}
+  - component: {fileID: 111207271}
   m_Layer: 0
   m_Name: GameSceneContext
   m_TagString: Untagged
@@ -334,6 +335,7 @@ MonoBehaviour:
   - {fileID: 111207268}
   - {fileID: 111207269}
   - {fileID: 111207270}
+  - {fileID: 111207271}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -454,6 +456,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerSwipeInput: {fileID: 1429658592}
   _playerSpawnPoint: {fileID: 642809924}
+--- !u!114 &111207271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111207261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 028cdd0be514023429efd8e9ae58be61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &116970941
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,7 +558,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &323681333
 Transform:
@@ -727,6 +741,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_rsg_military_concret_block_01 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 1117350600303828173, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
 --- !u!4 &624929221 stripped
@@ -820,6 +838,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_rsg_military_concret_block_01 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 1117350600303828173, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
 --- !u!4 &705457757 stripped
@@ -855,7 +877,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.9716981, g: 0.83150953, b: 0.66552156, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -975,6 +997,10 @@ PrefabInstance:
     - target: {fileID: 1117350600303828173, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
       propertyPath: m_Name
       value: P_rsg_military_concret_block_01 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1117350600303828173, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
@@ -1257,7 +1283,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1197205955
 Transform:
@@ -1378,6 +1404,10 @@ PrefabInstance:
     - target: {fileID: 1117350600303828173, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
       propertyPath: m_Name
       value: P_rsg_military_concret_block_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1117350600303828173, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
@@ -1638,6 +1668,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_rsg_military_concret_block_01 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1117350600303828173, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
 --- !u!4 &1449623424 stripped
@@ -1700,6 +1734,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_rsg_military_concret_block_01 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1117350600303828173, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
 --- !u!4 &1572183302 stripped
@@ -1717,11 +1755,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1633282497}
   m_Layer: 0
-  m_Name: '[Enviroment]'
+  m_Name: '[StaticEnviroment]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1633282497
 Transform:
@@ -1793,6 +1831,10 @@ PrefabInstance:
     - target: {fileID: 1117350600303828173, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
       propertyPath: m_Name
       value: P_rsg_military_concret_block_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1117350600303828173, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
@@ -1923,6 +1965,10 @@ PrefabInstance:
     - target: {fileID: 1117350600303828173, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
       propertyPath: m_Name
       value: P_rsg_military_concret_block_01 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1117350600303828173, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd4322f23b8e2b848977f31a93465a0e, type: 3}

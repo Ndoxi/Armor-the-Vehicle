@@ -39,7 +39,7 @@ namespace Codebase.Core
             return item;
         }
 
-        public bool Empty()
+        public bool IsEmpty()
         {
             return _content.Count == 0;
         }
