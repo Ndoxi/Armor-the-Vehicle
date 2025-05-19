@@ -25,6 +25,8 @@ namespace Codebase.Core.Actors
             _taskCompletionSource = new UniTaskCompletionSource();
             cancellationToken.Register(() => Cancell(cancellationToken));
 
+            _particleSystem.Play();
+
             return _taskCompletionSource.Task;
         }
 

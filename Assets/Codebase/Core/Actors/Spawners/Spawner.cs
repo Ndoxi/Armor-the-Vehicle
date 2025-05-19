@@ -34,7 +34,7 @@ namespace Codebase.Core.Actors
             _pool.Initialize(initialActors);
         }
 
-        protected void Despawn(T actor)
+        protected virtual void Despawn(T actor)
         {
             if (_despawnHandlers.TryGetValue(actor, out Action handler))
             {

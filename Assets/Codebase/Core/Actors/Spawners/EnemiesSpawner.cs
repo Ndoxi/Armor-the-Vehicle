@@ -69,5 +69,12 @@ namespace Codebase.Core.Actors
 
             _managedEnemiesMap.Remove(chunk);
         }
+
+        protected override void Despawn(StickmanActor actor)
+        {
+            foreach (var map in _managedEnemiesMap.Values)
+                map.Remove(actor);
+            base.Despawn(actor);
+        }
     }
 }

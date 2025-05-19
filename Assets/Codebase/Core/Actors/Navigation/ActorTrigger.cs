@@ -24,7 +24,7 @@ namespace Codebase.Core.Actors
             if (other.TryGetComponent(out ActorHitBox<TActor> hitbox))
             {
                 OnEnter?.Invoke(hitbox.Owner);
-                OnEnterWithContactPoint?.Invoke(hitbox.Owner, Collider.ClosestPoint(other.attachedRigidbody.transform.position));
+                OnEnterWithContactPoint?.Invoke(hitbox.Owner, Collider.ClosestPoint(other.transform.position));
             }
         }
 

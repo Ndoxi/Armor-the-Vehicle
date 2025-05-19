@@ -68,7 +68,7 @@ namespace Codebase.Core.Actors
 
         private void PlayHitEffect(Actor target, Vector3 closestPoint)
         {
-            var rotation = Quaternion.LookRotation(target.GetPosition() - closestPoint, Vector3.left);
+            var rotation = Quaternion.LookRotation(target.GetPosition() - closestPoint, Vector3.right);
             _vfxController.Play(closestPoint, rotation);
         }
 
