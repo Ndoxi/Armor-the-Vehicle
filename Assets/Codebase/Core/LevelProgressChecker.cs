@@ -16,14 +16,16 @@ namespace Codebase.Core
         private readonly Actor _playerActor;
         private readonly Vector3 _levelStartPosition;
         private readonly int _distanseToComplete;
+        private readonly IProgress<int> _progress;
         private int _currentDistanse;
         private bool _finished;
 
-        public LevelProgressChecker(Actor actor, Vector3 levelStartPosition)
+        public LevelProgressChecker(Actor actor, Vector3 levelStartPosition, IProgress<int> progress)
         {
             _playerActor = actor;
             _levelStartPosition = levelStartPosition;
             _distanseToComplete = 300;
+            _progress = progress;
 
             _playerActor.OnDeathEvent += OnLevelFailed;
         }
@@ -40,6 +42,8 @@ namespace Codebase.Core
                 return;
 
             _currentDistanse = Mathf.RoundToInt(Vector3.Distance(_levelStartPosition, _playerActor.transform.position));
+            _progress.Report(_currentDistanse);
+
             if (_currentDistanse >= _distanseToComplete)
                 OnLevelCompleted();
         }

@@ -21,6 +21,7 @@ namespace Codebase.Core
         private readonly ActorsSystem _actorsSystem;
         private readonly CinematicCameraService _cameraService;
         private readonly ILogger _logger;
+        private readonly LevelData _levelData;
         private CancellationTokenSource _stateExitCancellationTokenSource;
         private LevelProgressChecker _levelProgress;
         
@@ -37,11 +38,14 @@ namespace Codebase.Core
             _actorsSystem = actorsSystem;
             _cameraService = cameraService;
             _logger = logger;
+
+            _levelData = new LevelData(300);
         }
 
         public void Enter()
         {
-            _levelProgress = new LevelProgressChecker(_actorsSystem.PlayerActor, _actorsSystem.PlayerActorSpawnPoint);
+            var progress = new LevelProgress(_levelData);
+            _levelProgress = new LevelProgressChecker(_actorsSystem.PlayerActor, _actorsSystem.PlayerActorSpawnPoint, progress);
             _stateExitCancellationTokenSource = new CancellationTokenSource();
             
             _levelProgress.OnFinish += FinishLevel;
@@ -53,6 +57,7 @@ namespace Codebase.Core
             AllowPlayerMovementWithDelay();
 
             _view.Show();
+            _view.SetProgress(progress);
         }
 
         public void Exit()

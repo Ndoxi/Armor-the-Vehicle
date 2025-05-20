@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initialHealthValue: 10
-  _attackDamage: 2
+  _attackDamage: 1
 --- !u!1 &5946475101326400863
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ namespace Codebase.Core.Views
         [SerializeField] private RectTransform _root;
         [SerializeField] private RectTransform _completedRoot;
         [SerializeField] private RectTransform _failRoot;
+        [SerializeField] private LevelProgressDisplay _levelProgressDisplay;
         [SerializeField] private Button _resetLevelButton;
 
         private void Awake()
@@ -45,6 +46,11 @@ namespace Codebase.Core.Views
             _completedRoot.gameObject.SetActive(false);
             _failRoot.gameObject.SetActive(false);
             _resetLevelButton.gameObject.SetActive(false);
+        }
+
+        public void SetProgress(LevelProgress progress)
+        {
+            _levelProgressDisplay.SetProgress(progress);
         }
 
         public void OnLevelCompleted(LevelProgressChecker.State result)
