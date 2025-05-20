@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af23f2d638133744d97006a7a76d45eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 50
+  _speed: 65
 --- !u!54 &1949090373581718618
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -311,7 +311,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7224488627756339215}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -0.365}
+  m_LocalPosition: {x: 0, y: 0, z: -0.338}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -360,31 +360,22 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.075
+  m_Time: 0.15
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 0.15
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.32672858
-        inSlope: 0.31495148
-        outSlope: 0.31495148
+        value: 1
+        inSlope: 0.018727412
+        outSlope: 0.018727412
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.18863262
-      - serializedVersion: 3
-        time: 0.57413286
-        value: 0.33708417
-        inSlope: -0.38367343
-        outSlope: -0.38367343
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.3845026
-        outWeight: 0.4874302
+        outWeight: 0.1703057
       - serializedVersion: 3
         time: 1
         value: 0

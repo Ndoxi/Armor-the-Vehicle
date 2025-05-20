@@ -9,6 +9,7 @@ namespace Codebase.Installers
         public override void InstallBindings()
         {
             BindBulletActorVFXController();
+            BindStickmanActorVFXController();
         }
 
         private void BindBulletActorVFXController()
@@ -17,6 +18,15 @@ namespace Codebase.Installers
             controller.Initialize();
 
             Container.Bind(typeof(BulletActorVFXController), typeof(IDisposable))
+                     .FromInstance(controller);
+        }        
+        
+        private void BindStickmanActorVFXController()
+        {
+            var controller = Container.Instantiate<StickmanActorVFXController>();
+            controller.Initialize();
+
+            Container.Bind(typeof(StickmanActorVFXController), typeof(IDisposable))
                      .FromInstance(controller);
         }
     }

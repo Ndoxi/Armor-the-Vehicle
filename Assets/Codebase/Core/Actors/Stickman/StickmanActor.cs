@@ -18,19 +18,22 @@ namespace Codebase.Core.Actors
         private ChasePathBuilder _pathBuilder;
         private IAttack _attack;
         private Rigidbody _rigidbody;
+        private StickmanActorVFXController _vfxController;
 
         [Inject]
         private void Construct(ActorStateMachineBase stateMachine,
                                ActorHealth actorHealth,
                                ChasePathBuilder pathBuilder,
                                IAttack attack, 
-                               Rigidbody rigidbody)
+                               Rigidbody rigidbody, 
+                               StickmanActorVFXController vfxController)
         {
             _stateMachine = stateMachine;
             _actorHealth = actorHealth;
             _pathBuilder = pathBuilder;
             _attack = attack;
             _rigidbody = rigidbody;
+            _vfxController = vfxController;
         }
 
         private void Awake()
@@ -62,7 +65,7 @@ namespace Codebase.Core.Actors
         {
             if (value > 0)
                 return;
-            _stateMachine.EnterState<DeathState>();
+            _stateMachine.EnterState<StickmanDeathState>();
         }
 
         private void PerformAttack(PlayerActor playerActor)

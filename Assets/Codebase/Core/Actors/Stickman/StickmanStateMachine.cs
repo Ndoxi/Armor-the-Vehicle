@@ -16,7 +16,7 @@ namespace Codebase.Core.Actors
             {
                 { typeof(IdleState), factory.Create<IdleState>() },
                 { typeof(MovementState), factory.Create<MovementState>() },
-                { typeof(DeathState), factory.Create<DeathState>() }
+                { typeof(StickmanDeathState), factory.Create<StickmanDeathState>() }
             };
         }
     }
