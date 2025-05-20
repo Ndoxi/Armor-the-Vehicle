@@ -43,6 +43,11 @@ namespace Codebase.Core.Actors
             Rigidbody.rotation = rotation;
         }
 
+        public void SetPositionAndRotationImmediate(Vector3 position, Quaternion rotation)
+        {
+            transform.SetPositionAndRotation(position, rotation);
+        }
+
         public virtual void OnDeath()
         {
             OnDeathEvent?.Invoke();

@@ -26,7 +26,7 @@ namespace Codebase.Core.Actors
         public void Fire()
         {
             var bullet = _spawner.SpawnOne();
-            bullet.SetPositionAndRotation(_bulletSpawnPoint.position, _turretRoot.rotation);
+            bullet.SetPositionAndRotationImmediate(_bulletSpawnPoint.position, _turretRoot.rotation);
             bullet.Fire();
         }
 

@@ -12,6 +12,8 @@ namespace Codebase.Core.Actors
         protected override Rigidbody Rigidbody => _rigidbody;
 
         [SerializeField] private StickmanTrigger _attackTrigger;
+        [SerializeField] private TrailRenderer _trailRenderer;
+
         private ActorStateMachineBase _actorStateMachine;
         private IAttack _attack;
         private Rigidbody _rigidbody;
@@ -38,7 +40,9 @@ namespace Codebase.Core.Actors
         {
             _attackTrigger.OnEnterWithContactPoint += PerformAttack;
             _actorStateMachine.OnEnterEvent.AddListener<BulletMovementState>(EnableCollider);
-            _actorStateMachine.OnExitEvent.AddListener<BulletMovementState>(DisableCollider);
+            _actorStateMachine.OnExitEvent.AddListener<BulletMovementState>(DisableCollider);            
+            _actorStateMachine.OnEnterEvent.AddListener<BulletMovementState>(EnableTrail);
+            _actorStateMachine.OnExitEvent.AddListener<BulletMovementState>(DisableTrail);
         }
 
         private void OnDisable()
@@ -46,6 +50,8 @@ namespace Codebase.Core.Actors
             _attackTrigger.OnEnterWithContactPoint -= PerformAttack;
             _actorStateMachine.OnEnterEvent.RemoveListener<BulletMovementState>(EnableCollider);
             _actorStateMachine.OnExitEvent.RemoveListener<BulletMovementState>(DisableCollider);
+            _actorStateMachine.OnEnterEvent.RemoveListener<BulletMovementState>(EnableTrail);
+            _actorStateMachine.OnExitEvent.RemoveListener<BulletMovementState>(DisableTrail);
         }
 
         public override void HardReset()
@@ -75,6 +81,7 @@ namespace Codebase.Core.Actors
         private void SetInitialState()
         {
             _actorStateMachine.EnterState<IdleState>();
+            DisableTrail();
         }
 
         private void EnableCollider()
@@ -84,7 +91,19 @@ namespace Codebase.Core.Actors
 
         private void DisableCollider()
         {
-            _attackTrigger.Collider.enabled = true;
+            _attackTrigger.Collider.enabled = false;
+        }
+
+        private void EnableTrail()
+        {
+            _trailRenderer.Clear();
+            _trailRenderer.emitting = true;
+        }
+
+        private void DisableTrail()
+        {
+            _trailRenderer.emitting = false;
+            _trailRenderer.Clear();
         }
     }
 }

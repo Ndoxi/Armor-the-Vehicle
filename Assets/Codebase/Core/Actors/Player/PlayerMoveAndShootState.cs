@@ -4,7 +4,7 @@
     {
         private readonly PlayerActorTurret _turret;
         private readonly ITurretRotationController _rotationController;
-        private readonly float _fireInterval = 0.2f;
+        private readonly float _fireInterval = 0.35f;
         private float _timer = 0f;
 
         public PlayerMoveAndShootState(ActorMovement actorMovement,
